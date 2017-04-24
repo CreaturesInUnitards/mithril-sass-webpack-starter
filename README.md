@@ -4,13 +4,16 @@
 ```
 $> npm install
 ```
-...and once that's finished
+### Usage
 ```
 $> npm run start
 ```
 ...then open a browser and visit [http://localhost:8080]()  
 
-Once you're ready to deploy, you'll get a simple, production-ready build (located at './build') using
+Modifications made to html, sass and js files will automatically trigger a re-build and browser refresh.
+
+### Deployment
+You'll get a simple, production-ready build (located at './build') using
 ```
 $> webpack -p
 ```
