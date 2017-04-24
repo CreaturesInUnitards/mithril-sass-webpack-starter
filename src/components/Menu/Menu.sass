@@ -1,0 +1,20 @@
+@import '../../includes'
+$menu-border: 1px solid black
+
+menu
+	margin: 0
+	padding: 0
+	width: $menu-width
+	border: $menu-border
+
+
+.menu-item
+	padding: 10px
+	cursor: pointer
+	user-select: none
+
+	&:hover
+		background: #ccc
+
+.menu-item + .menu-item
+	border-top: $menu-border
