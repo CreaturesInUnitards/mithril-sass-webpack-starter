@@ -9,13 +9,16 @@ function email (employee) {
 }
 
 function signIn (state) {
+	trying = true
 	firebase.auth().signInWithEmailAndPassword(email(state.selected), state.password)
 		.then(function () {
 			State.current = state.selected
+			trying = false
 			m.redraw()
 		})
 		.catch(function (e) {
 			state.password = ''
+			trying = false
 			m.redraw()
 			alert('bad creds.')
 		})
@@ -38,18 +41,23 @@ var listen = function (e) {
 	}
 }
 
+var trying = false
+
 module.exports = {
 	selected: null,
 	password: '',
 	view: function (vnode) {
 		return m('.list.flex'
+			, { onclick: function () { clear(vnode.state) } 
+			}
 			, State.employees
 				.sort(State.listSort)
 				.map(function (employee) {
 					return m('.list-item'
 						, {
 							class: State.isClockedIn(employee) ? 'active' : '',
-							onclick: function () {
+							onclick: function (e) {
+								e.stopPropagation()
 								vnode.state.selected = vnode.state.selected === employee ? null : employee
 								vnode.state.password = ''
 							}
@@ -66,10 +74,7 @@ module.exports = {
 							: fullName(employee)
 					)
 				})
+			, trying ? m('.loader') : null
 		)
 	}
 }
-
-
-// TODO: bad creds
-// TODO: clear password on bad creds/clickaway

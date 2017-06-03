@@ -11,11 +11,14 @@ var displayName = function () {
 }
 
 module.exports = {
+	message: null,
 	view: function () {
 		var clockedIn = State.isClockedIn(State.current)
 		return m('.detail.flex'
 			, m('.wrapper'
 				, m('h3', displayName())
+				, m('textarea[placeholder=something to say?]')
+				, m('button.send-message', {}, 'send message')
 				, m('.blocks'
 					, m('h4', 'Pay Period')
 					, m('.pay-period'
@@ -38,3 +41,5 @@ module.exports = {
 		)
 	}
 }
+
+// TODO: TOTAL total
