@@ -1,0 +1,24 @@
+.list
+	flex-direction: column
+	justify-content: center
+	align-items: center
+	
+	* + *
+		margin-top: 10px
+		
+.list-item
+	padding: 8px
+	background: #eeeeee
+	border-radius: 6px
+	font-size: 18px
+	font-family: Optima, sans-serif
+	width: 300px
+	text-align: center
+	cursor: pointer
+	user-select: none
+	
+	&:hover
+		background: yellow
+		
+	&.active
+		background: greenyellow

@@ -1,21 +1,15 @@
-var m = require('mithril')
-var Header = require('./components/Header/Header')
-var Menu = require('./components/Menu/Menu')
-var Editor = require('./components/Editor/Editor')
-var State = require('./model/State')
+window.m = require('mithril')
+window.State = require('./State')
+var List = require('./components/List/code')
+var Detail = require('./components/Detail/code')
+
 require('./globals.sass')
 
 var App = {
 	view: function(){
-		return [
-			m(Header),
-			m('main'
-				, m(Menu)
-				, State.current
-					? m(Editor)
-					: m('.editor', 'nothing selected')
-			)
-		]
+		return State.current
+			? m(Detail)
+			: m(List)
 	}
 }
 

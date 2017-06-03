@@ -1,0 +1,20 @@
+.block
+	padding: 5px
+	
+	&:nth-child(even)
+		background: white
+	
+	.in, .out, .block-total
+		font-family: monospace
+		position: relative
+		display: inline-block
+		
+		label
+			font-family: Optima, sans-serif
+			color: #999999
+			
+	.active
+		font-style: italic
+
+.block span + span
+	margin-left: 20px
