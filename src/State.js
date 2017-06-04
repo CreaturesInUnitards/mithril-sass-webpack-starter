@@ -48,6 +48,14 @@ var State = {
 		delete saveObj.id
 		var empRef = ref.child(State.current.id)
 		empRef.update(saveObj)
+	},
+	sendMessage: function () {
+		var message = this.message
+		return firebase.database().ref('Messages').push({
+			employee: State.current.firstName,
+			timestamp: (new Date()).toTimeString(),
+			message: message
+		})
 	}
 }
 

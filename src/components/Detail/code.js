@@ -4,6 +4,7 @@
 *
 ***********************************/
 require('./style.sass')
+var Message = require('../Message/code')
 var TimeBlock = require('../TimeBlock/code')
 
 var displayName = function () {
@@ -12,13 +13,25 @@ var displayName = function () {
 
 module.exports = {
 	message: null,
-	view: function () {
+	view: function (vnode) {
 		var clockedIn = State.isClockedIn(State.current)
 		return m('.detail.flex'
 			, m('.wrapper'
-				, m('h3', displayName())
-				, m('textarea[placeholder=something to say?]')
-				, m('button.send-message', {}, 'send message')
+				, m('h3'
+					, m('button.back'
+						, { onclick: function(){ State.current = null }}
+						, '< back'
+					)
+					, displayName()
+				)
+				, m('button.clock'
+					, {
+						class: clockedIn ? 'out' : 'in',
+						onclick: State.punchClock
+					}
+					, clockedIn ? 'Clock Out' : 'Clock In'
+				)
+				, m(Message)
 				, m('.blocks'
 					, m('h4', 'Pay Period')
 					, m('.pay-period'
@@ -27,19 +40,11 @@ module.exports = {
 						})
 					)
 				)
-				, m('button.clock'
-					, {
-						onclick: State.punchClock
-					}
-					, clockedIn ? 'Clock Out' : 'Clock In'
-				)
-				, m('button'
-					, { onclick: function(){ State.current = null }}
-					, '< back'
-				)
 			)
 		)
 	}
 }
 
 // TODO: TOTAL total
+// TODO: must calc overtime for each Mon-Sun
+// TODO: must set Pay Period start date
