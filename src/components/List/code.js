@@ -1,6 +1,6 @@
 require('./style.sass')
 
-function fullName (employee) {
+function lastFirstName (employee) {
 	return employee.lastName + ', ' + employee.firstName
 }
 
@@ -63,15 +63,16 @@ module.exports = {
 							}
 						}
 						, vnode.state.selected === employee
-							? m('input[type=password][placeholder=password][autofocus]'
+							? m('input[type=password][placeholder=password]'
 								, {
+									oncreate: function (vn) { vn.dom.focus() },
 									value: vnode.state.password, 
 									oninput: m.withAttr('value', function(v){ vnode.state.password = v }),
 									onkeyup: listen.bind(vnode.state),
 									onclick: function (e) { e.stopPropagation() }
 								}
 							)
-							: fullName(employee)
+							: lastFirstName(employee)
 					)
 				})
 			, trying ? m('.loader') : null

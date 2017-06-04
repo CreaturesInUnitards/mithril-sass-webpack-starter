@@ -5,41 +5,28 @@
 ***********************************/
 require('./style.sass')
 var Message = require('../Message/code')
-var TimeBlock = require('../TimeBlock/code')
-
-var displayName = function () {
-	return State.current.firstName + ' ' + State.current.lastName
-}
+var PayPeriod = require('../PayPeriod/code')
 
 module.exports = {
-	message: null,
-	view: function (vnode) {
+	view: function () {
 		var clockedIn = State.isClockedIn(State.current)
 		return m('.detail.flex'
 			, m('.wrapper'
-				, m('h3'
-					, m('button.back'
-						, { onclick: function(){ State.current = null }}
-						, '< back'
+				, m(''
+					, m('h3.employee-name'
+						, m('button.back', { onclick: function(){ State.current = null }})
+						, State.displayName(State.current)
 					)
-					, displayName()
-				)
-				, m('button.clock'
-					, {
-						class: clockedIn ? 'out' : 'in',
-						onclick: State.punchClock
-					}
-					, clockedIn ? 'Clock Out' : 'Clock In'
-				)
-				, m(Message)
-				, m('.blocks'
-					, m('h4', 'Pay Period')
-					, m('.pay-period'
-						, State.current.blocks.map(function (block) {
-							return m(TimeBlock, { block: block })
-						})
+					, m('button.clock'
+						, {
+							class: clockedIn ? 'out' : 'in',
+							onclick: State.punchClock
+						}
+						, clockedIn ? 'Clock Out' : 'Clock In'
 					)
+					, m(Message)
 				)
+				, m(PayPeriod)
 			)
 		)
 	}

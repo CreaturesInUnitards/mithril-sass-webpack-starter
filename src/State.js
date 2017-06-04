@@ -1,4 +1,5 @@
-var ref = firebase.database().ref('CrewMonkey/employees')
+var Timekeeping = require('./Timekeeping')
+var ref = firebase.database().ref('CrewMonkey')
 
 var State = {
 	current: null,
@@ -14,6 +15,9 @@ var State = {
 			}
 		})
 		return clone
+	},
+	displayName: function (employee) {
+		return employee.firstName + ' ' + employee.lastName
 	},
 	listSort: function (a, b) {
 		if (a.lastName < b.lastName) return -1
@@ -42,17 +46,17 @@ var State = {
 			State.lastBlock(State.current).out = now
 		
 		State.save()
+		State.current = null
 	},
 	save: function () {
 		var saveObj = State.deepClone(State.current)
 		delete saveObj.id
-		var empRef = ref.child(State.current.id)
-		empRef.update(saveObj)
+		ref.child('employees').child(State.current.id).update(saveObj)
 	},
 	sendMessage: function () {
 		var message = this.message
-		return firebase.database().ref('Messages').push({
-			employee: State.current.firstName,
+		return ref.child('messages').push({
+			employee: State.displayName(State.current),
 			timestamp: (new Date()).toTimeString(),
 			message: message
 		})
@@ -61,10 +65,14 @@ var State = {
 
 module.exports = State
 
-ref.on('child_added', function(snapshot){
-	var obj = snapshot.val()
-	obj.id = snapshot.key
-	if (!obj.blocks) obj.blocks = []
-	State.employees.push(obj)
-	m.redraw()
+ref.child('periodStart').on('value', function(start){
+	Timekeeping.periodStart = start.val()
+
+	ref.child('employees').on('child_added', function(snapshot){
+		var obj = snapshot.val()
+		obj.id = snapshot.key
+		if (!obj.blocks) obj.blocks = []
+		State.employees.push(obj)
+		m.redraw()
+	})
 })

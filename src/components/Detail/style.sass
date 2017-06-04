@@ -1,27 +1,52 @@
 .detail
 	justify-content: center
 	align-items: center
+	
+.employee-name
+	position: relative
+	height: 60px
+	line-height: 60px
+	padding: 0 0 0 80px
+	color: white
+	background: rgba(255, 255, 255, 0.05)
+	font-size: 30px
+	margin: 0
 
 button.back
-	height: 100%
-	margin-right: 20px
+	position: absolute
+	top: 0
+	left: 0
+	width: 60px
+	height: 60px
+	background: #444444
+	border: 0
+	transition: background 0.3s
+	
+	&:after
+		content: ''
+		position: absolute
+		width: 30%
+		height: 30%
+		border-bottom: 2px solid white
+		border-left: 2px solid white
+		top: 50%
+		left: 50%
+		transform: translate(-25%, -50%) rotate(45deg)
+		
+	&:hover
+		background: #666666
 	
 .wrapper
-	min-width: 400px
-
-textarea, button.send-message
-	display: block
-	padding: 10px
-	width: 100%
-	margin: 10px 0
-
-textarea
-	resize: none
+	display: flex
+	min-width: 1024px
+	
+	& > *
+		flex: 1
 	
 .blocks
+	margin-left: 20px
 	padding: 20px
 	background: #eeeeee
-	margin-bottom: 20px
 
 button.clock
 	display: block
@@ -29,9 +54,28 @@ button.clock
 	width: 100%
 	font-size: 36px
 	border: 0
+	transition: color 0.3s
 
 	&.in
 		background: greenyellow
 
 	&.out
 		background: red
+		
+	&:hover
+		color: white
+		
+
+.pay-period
+	margin-bottom: 30px
+
+h4.totals-heading
+	margin-top: 20px
+	
+.total
+	display: flex
+	justify-content: space-between
+	
+	.sum
+		font-family: monospace
+		font-size: 1.25em
