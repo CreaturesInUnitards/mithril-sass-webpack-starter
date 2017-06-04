@@ -31,7 +31,3 @@ module.exports = {
 		)
 	}
 }
-
-// TODO: TOTAL total
-// TODO: must calc overtime for each Mon-Sun
-// TODO: must set Pay Period start date
