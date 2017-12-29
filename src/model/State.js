@@ -1,1 +1,1 @@
-module.exports = { current: null }
+module.exports = { foo: 'bar' }
